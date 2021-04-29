@@ -1,7 +1,7 @@
-# smmtouch_interview
+# job_interview
 
-test1.php - задача на форму
+test1.php - MySQL demo, a form which adds messages to database and displays them;
 
-test2.php - задача на Redis
+test2.php - Redis demo, IP logger for site visitors;
 
-Перед запуском, пожалуйста, выставите свои юзернеймы/пароли в функциях подключения mysql и redis.
+Before executing, please put in your passwords for DB and Redis
