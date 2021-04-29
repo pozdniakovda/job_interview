@@ -1,6 +1,6 @@
 <?php
 
-//Подключение БД
+//Connect DB
 function connectDB() {
 	$dbhost = "localhost";
 	$dbuser = "root";
@@ -10,7 +10,7 @@ function connectDB() {
 	return $conn;
 }
 
-//Создание базы данных interview_test1 если ее не существует
+//Create DB interview_test1 if not exists
 function createDB() {
 	$conn = connectDB();
 
@@ -23,7 +23,7 @@ function createDB() {
 	$conn->close();
 }
 
-//Создание таблицы messages если ее не существует
+//Create table messages if not exists
 function createTableMessages() {
 	$conn = connectDB();
 
@@ -37,12 +37,12 @@ function createTableMessages() {
 }
 
 
-//Отправка сообщения в БД
+//Send message to DB
 function sendMessage() {
 	if (isset($_POST['submit'])) {
 		$conn = connectDB();
 
-		$query = "INSERT INTO `interview_test1`.`messages`(`message`, `datetime`) VALUES ('" . $_POST['message'] . "'" . ", " . "NOW()" . ");";
+		$query = "INSERT INTO `interview_test1`.`messages`(`message`, `datetime`) VALUES ('" . mysql_real_escape_string($_POST['message']) . "'" . ", " . "NOW()" . ");";
 
 		if (!$conn->query($query)) {
 			echo "Error: " . $conn->error;
@@ -52,7 +52,7 @@ function sendMessage() {
 	}
 }
 
-//Получение данных о сообщениях из БД
+//Get message data from DB
 function getMessages() {
 	$conn = connectDB();
 
@@ -67,24 +67,24 @@ function getMessages() {
 	return mysqli_fetch_all($result);
 }
 
-//Отрисовка всей таблицы
+//Draw table
 function printTableWMessages () {
-	//Заголовок
+	//Header
 	echo '<table class="table"><tr><th>id</th><th>message</th><th>datetime</th></tr>';
-	//Данные
+	//Data
 	printTableContents(getMessages());
 
 	echo '</table>';
 }
 
-//Отрисовка содержимого таблицы
+//Draw table contents
 function printTableContents($data) {
 	foreach ($data as $row) {
 		printTableRow($row);
 	}
 }
 
-//Отрисовка одного ряда
+//Draw single row
 function printTableRow($row) {
 	echo "<tr>";
 	foreach ($row as $col) {
@@ -118,7 +118,7 @@ function printTableRow($row) {
 	printTableWMessages(); 
 	?>
 	<form action="test1.php" method="POST">
-		<div><textarea rows="5" cols="25" placeholder="Введите сообщение..." name="message"></textarea></div>
+		<div><textarea rows="5" cols="25" placeholder="Input message..." name="message"></textarea></div>
 		<input type="submit" name="submit">
 	</form>
 </body>
